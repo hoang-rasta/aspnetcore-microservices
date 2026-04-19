@@ -1,0 +1,82 @@
+
+# Docker Commands Reference
+
+## Docker Hub Pull Example
+```bash
+docker run -d --hostname swn-rabbit --name swn-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+```
+
+## Single Container Operations
+For ASP.NET Core app after adding Dockerfile - build and run single container:
+
+```bash
+# Build the image
+docker build -t aspnetapp .
+
+# Run the container
+docker run -d -p 8080:80 --name myapp aspnetapp
+```
+
+## Docker Compose Operations
+
+### Basic Multi-Container
+```bash
+docker compose up
+```
+*This command runs multiple containers*
+
+### Multi-Container with Specific Files
+```bash
+# Using multiple compose files
+docker compose -f docker-compose.yaml -f docker-compose-infrastructure.yaml up --build
+```
+
+### Latest Docker Compose Commands (Docker Compose V2)
+```bash
+# Build and run in detached mode
+docker compose -f docker-compose.yml -f docker-compose.override.yml up --build
+
+# Build and run in background (detached)
+docker compose -f docker-compose.yml -f docker-compose.override.yml up -d --build
+```
+
+## Container and Image Management
+
+### PowerShell Commands for Cleanup
+Reference: https://blog.baudson.de/blog/stop-and-remove-all-docker-containers-and-images
+
+#### List Operations
+```bash
+# List all containers (only IDs)
+docker ps -aq
+```
+
+#### Stop Operations
+```bash
+# Stop all running containers
+docker stop $(docker ps -aq)
+```
+
+#### Remove Operations
+```bash
+# Remove all containers
+docker rm $(docker ps -aq)
+
+# Remove all images
+docker rmi $(docker images -q)
+
+# Remove all unused images (dangling)
+docker system prune
+```
+
+### Quick Cleanup Script (Copy-Paste)
+```bash
+docker ps -aq
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker rmi $(docker images -q) -f
+docker system prune
+```
+
+---
+*Note: Use `docker compose` (with space) for Docker Compose V2, not `docker-compose`*

@@ -1,4 +1,3 @@
-
 namespace Discount.API
 {
     public class Program
@@ -26,7 +25,6 @@ namespace Discount.API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

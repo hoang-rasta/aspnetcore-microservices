@@ -1,4 +1,3 @@
-
 namespace Ordering.API
 {
     public class Program
@@ -26,7 +25,6 @@ namespace Ordering.API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

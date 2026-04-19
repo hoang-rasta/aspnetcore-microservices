@@ -1,3 +1,4 @@
+using Basket.API.Persistence.Extensions;
 
 namespace Basket.API
 {
@@ -14,19 +15,25 @@ namespace Basket.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //DI services
+            builder.Services.AddApplicationServices(builder.Configuration);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket API V1");
+                });
                 app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

@@ -1,4 +1,3 @@
-
 namespace Catalog.API
 {
     public class Program
@@ -26,7 +25,6 @@ namespace Catalog.API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
