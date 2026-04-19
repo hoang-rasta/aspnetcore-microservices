@@ -1,3 +1,5 @@
+using Discount.API.Persistence.Extensions;
+
 namespace Discount.API
 {
     public class Program
@@ -13,12 +15,21 @@ namespace Discount.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //DI services
+            builder.Services.AddApplicationServices(builder.Configuration);
+
             var app = builder.Build();
+
+            app.InitializeDiscountDatabaseAsync<Program>().GetAwaiter().GetResult();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Discount API V1");
+                });
                 app.UseSwaggerUI();
             }
 
