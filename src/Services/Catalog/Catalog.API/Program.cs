@@ -1,3 +1,6 @@
+using Catalog.API.Persistence.Extensions;
+using Microsoft.OpenApi;
+
 namespace Catalog.API
 {
     public class Program
@@ -11,7 +14,11 @@ namespace Catalog.API
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            //builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerDocumentation();
+
+            //DI services
+            builder.Services.AddApplicationServices(builder.Configuration);
 
             var app = builder.Build();
 
