@@ -12,6 +12,7 @@
   </Folder>
   <Folder Name="/src/Services/Discount/">
     <Project Path="src/Services/Discount/Discount.API/Discount.API.csproj" />
+    <Project Path="src/Services/Discount/Discount.Grpc/Discount.Grpc.csproj" Id="f683fbe1-6967-4b37-bda8-7eae706f64f8" />
   </Folder>
   <Folder Name="/src/Services/Ordering/">
     <Project Path="src/Services/Ordering/Ordering.API/Ordering.API.csproj" />
