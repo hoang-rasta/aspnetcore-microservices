@@ -1,4 +1,11 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="csharpier-commands.txt" />
+    <File Path="docker-commands.txt" />
+    <File Path="docker-compose.override.yml" />
+    <File Path="docker-compose.yml" />
+    <File Path="README.md" />
+  </Folder>
   <Folder Name="/src/" />
   <Folder Name="/src/ApiGateways/">
     <Project Path="src/ApiGateways/OcelotApiGateway/OcelotApiGateway.csproj" />
@@ -12,9 +19,24 @@
   </Folder>
   <Folder Name="/src/Services/Discount/">
     <Project Path="src/Services/Discount/Discount.API/Discount.API.csproj" />
-    <Project Path="src/Services/Discount/Discount.Grpc/Discount.Grpc.csproj" Id="f683fbe1-6967-4b37-bda8-7eae706f64f8" />
+    <Project
+      Path="src/Services/Discount/Discount.Grpc/Discount.Grpc.csproj"
+      Id="f683fbe1-6967-4b37-bda8-7eae706f64f8"
+    />
   </Folder>
   <Folder Name="/src/Services/Ordering/">
     <Project Path="src/Services/Ordering/Ordering.API/Ordering.API.csproj" />
+    <Project
+      Path="src/Services/Ordering/Ordering.Application/Ordering.Application.csproj"
+      Id="9897cc91-6d57-4d5f-a7d8-e4606ee923ba"
+    />
+    <Project
+      Path="src/Services/Ordering/Ordering.Domain/Ordering.Domain.csproj"
+      Id="ca141973-33cd-458f-a647-a4b629911107"
+    />
+    <Project
+      Path="src/Services/Ordering/Ordering.Infrastructure/Ordering.Infrastructure.csproj"
+      Id="33b77628-2f14-4d40-a78d-cbefc1cc1c16"
+    />
   </Folder>
 </Solution>

@@ -1,3 +1,10 @@
+using Microsoft.Data.SqlClient;
+using Microsoft.OpenApi;
+using Ordering.API.Extensions;
+using Ordering.Application;
+using Ordering.Infrastructure;
+using Ordering.Infrastructure.Persistence;
+
 namespace Ordering.API
 {
     public class Program
@@ -10,8 +17,14 @@ namespace Ordering.API
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddApplicationServices();
+            builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ordering.API", Version = "v1" });
+            });
 
             var app = builder.Build();
 
@@ -20,6 +33,9 @@ namespace Ordering.API
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ordering.API v1")
+                );
             }
 
             app.UseHttpsRedirection();
@@ -27,6 +43,15 @@ namespace Ordering.API
             app.UseAuthorization();
 
             app.MapControllers();
+
+            // Run migration + seed before app starts
+            app.MigrateDatabase<OrderContext>(
+                (context, services) =>
+                {
+                    var logger = services.GetRequiredService<ILogger<OrderContextSeed>>();
+                    OrderContextSeed.SeedAsync(context, logger).Wait();
+                }
+            );
 
             app.Run();
         }
