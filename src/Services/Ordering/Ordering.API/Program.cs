@@ -21,10 +21,8 @@ namespace Ordering.API
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ordering.API", Version = "v1" });
-            });
+
+            builder.Services.AddApplicationConfigureExtensionsServices(builder.Configuration);
 
             var app = builder.Build();
 
@@ -33,9 +31,6 @@ namespace Ordering.API
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-                app.UseSwaggerUI(c =>
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ordering.API v1")
-                );
             }
 
             app.UseHttpsRedirection();

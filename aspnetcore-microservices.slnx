@@ -10,6 +10,12 @@
   <Folder Name="/src/ApiGateways/">
     <Project Path="src/ApiGateways/OcelotApiGateway/OcelotApiGateway.csproj" />
   </Folder>
+  <Folder Name="/src/BuildingBlocks/">
+    <Project
+      Path="src/BuildingBlocks/EventBus.Messages/EventBus.Messages.csproj"
+      Id="39db1188-abaa-42e8-9e07-2c1fcdd34af5"
+    />
+  </Folder>
   <Folder Name="/src/Services/" />
   <Folder Name="/src/Services/Basket/">
     <Project Path="src/Services/Basket/Basket.API/Basket.API.csproj" />

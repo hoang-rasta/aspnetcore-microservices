@@ -1,6 +1,9 @@
 ﻿using Basket.API.Data;
+using Basket.API.GrpcServices;
 using Basket.API.Repositories;
 using Basket.API.Repositories.Interfaces;
+using Discount.Grpc.Protos;
+using MassTransit;
 using Microsoft.OpenApi;
 using StackExchange.Redis;
 
@@ -15,7 +18,6 @@ namespace Basket.API.Persistence.Extensions
         {
             #region Redis Dependencies
 
-            // add redis
             services.AddSingleton<ConnectionMultiplexer>(sp =>
             {
                 var redisConfiguration = ConfigurationOptions.Parse(
@@ -32,6 +34,32 @@ namespace Basket.API.Persistence.Extensions
 
             services.AddTransient<IBasketContext, BasketContext>();
             services.AddTransient<IBasketRepository, BasketRepository>();
+            services.AddAutoMapper(typeof(Program));
+
+            #endregion
+
+            #region GrpcSettings
+
+            services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(o =>
+                o.Address = new Uri(configuration["GrpcSettings:DiscountUrl"])
+            );
+
+            services.AddScoped<DiscountGrpcService>();
+
+            #endregion
+
+
+            #region MassTransit-RabbitMQ Configuration
+
+            services.AddMassTransit(config =>
+            {
+                config.UsingRabbitMq(
+                    (ctx, cfg) =>
+                    {
+                        cfg.Host(configuration["EventBusSettings:HostAddress"]);
+                    }
+                );
+            });
 
             #endregion
 

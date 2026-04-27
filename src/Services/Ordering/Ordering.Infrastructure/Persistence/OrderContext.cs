@@ -21,17 +21,29 @@ namespace Ordering.Infrastructure.Persistence
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            var currentUser = "system"; // can use ICurrentUserService
+
             foreach (var entry in ChangeTracker.Entries<EntityBase>())
             {
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedDate = DateTime.Now;
-                        entry.Entity.CreatedBy = "swn";
+                        entry.Entity.CreatedDate = DateTime.UtcNow;
+                        entry.Entity.CreatedBy = string.IsNullOrWhiteSpace(entry.Entity.CreatedBy)
+                            ? currentUser
+                            : entry.Entity.CreatedBy;
+
+                        entry.Entity.LastModifiedDate = DateTime.UtcNow;
+                        entry.Entity.LastModifiedBy = string.IsNullOrWhiteSpace(
+                            entry.Entity.LastModifiedBy
+                        )
+                            ? entry.Entity.CreatedBy
+                            : entry.Entity.LastModifiedBy;
                         break;
+
                     case EntityState.Modified:
-                        entry.Entity.LastModifiedDate = DateTime.Now;
-                        entry.Entity.LastModifiedBy = "swn";
+                        entry.Entity.LastModifiedDate = DateTime.UtcNow;
+                        entry.Entity.LastModifiedBy = currentUser;
                         break;
                 }
             }
